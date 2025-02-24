@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random joke</title>
+    <style>
+      .main {
+        height: 100vh;
+        max-width: 100%;
+        position: relative;
+      }
+      #h1 {
+        width: fit-content;
+        height: fit-content;
+        padding: 30px;
+        transition: 1s;
+        font-size: 30px;
+      }
+      body{
+        transition: 1s;
+        background-color:#333 ;
+        color: #333;
+      }
+      #button {
+        padding: 8px 18px;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 8px;
+        background-color:#333 ;
+        transition: 1s;
+      }
+      .button-div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #ffffff ;
+        display: flex; /* استخدام الفلكس */
+        align-items: start;
+        justify-content: center;
+        flex-direction: column;
+        padding: 30px;
+        border-radius: 20px;
+      }
+
+      @media (max-width:450px) {
+        #h1 {
+            padding: 0;
+            font-size: 20px;
+        }
+        .button-div {
+            width: 80%;
+            padding: 10%;
+            border-radius: 3px;
+        }
+      }
+      
+      @media (max-width:698px) {
+        #h1 {
+            padding: 0;
+            
+        }
+        .button-div {
+            width: 60%;
+            padding: 10%;
+            border-radius: 3px;
+        }
+      }
+    </style>
+  </head>
+  <body id="body" class="body">
+    <div class="main">
+      <div id="button-div" class="button-div">
+        <p id="h1">Random joke</p>
+        <button id="button" onclick="Randomjoke()">Change joke</button>
+      </div>
+    </div>
+
+    <script>
+      async function Randomjoke() {
+        try {
+          let jokes = await fetch(
+            "https://official-joke-api.appspot.com/random_joke"
+          );
+          let data = await jokes.json();
+          document.getElementById(
+            "h1"
+          ).innerText = ` ${data.setup} -  ${data.punchline}`;
+
+        let changecolor = `#${Math.floor(Math.random() * 16777215).toString(16)}`
+        document.getElementById("body").style.backgroundColor = changecolor
+        document.getElementById("h1").style.color = changecolor
+        document.getElementById("button").style.backgroundColor = changecolor
+
+        } catch (error) {
+          document.getElementById("h1").innerText = "حدث خطأ، حاول مرة أخرى!";
+        }
+      }
+
+      Randomjoke();
+    </script>
+  </body>
+</html>
